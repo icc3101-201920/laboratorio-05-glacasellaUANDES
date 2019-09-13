@@ -182,20 +182,33 @@ namespace Laboratorio_4_OOP_201902
                 6- Elimine la carta aleatoria escogida del mazo.
                 7- Agregue la carta original de la mano al mazo.
             */
-            if (this.hand.Cards[cardId] == typeof(CombatCard))
+            if (GetType(this.hand.Cards[cardId]) == typeof(CombatCard))
             {
                 CombatCard card = this.hand.Cards[cardId];
                 CombatCard newCard = new CombatCard(card.Name, card.Type, card.Effect, card.AttackPoints, card.Hero);
-                this.hand.DestroyCard(cardId);
-                Random randomNumber = new Random();
-                int number = randomNumber.Next(0, this.deck.Cards.Length);
-                // Quede en el punto 5
-                
             }
             else
             {
-
+                SpecialCard card = this.hand.Cards[cardId];
+                SpecialCard newCard = new SpecialCard(card.Name, card.Type, card.Effect, card.AttackPoints, card.Hero);
             }
+            this.hand.DestroyCard(cardId);
+            Random randomNumber = new Random();
+            int number = randomNumber.Next(0, this.deck.Cards.Length);
+            if (GetType(this.deck.Cards[number]) == typeof(CombatCard))
+            {
+                CombatCard card2 = this.deck.Cards[number];
+                CombatCard newCard2 = new CombatCard(card2.Name, card2.Type, card2.Effect, card2.AttackPoints, card2.Hero);
+            }
+            else
+            {
+                SpecialCard card2 = this.deck.Cards[number];
+                SpecialCard newCard2 = new SpecialCard(card2.Name, card2.Type, card2.Effect, card2.AttackPoints, card2.Hero);
+            }
+            this.hand.AddCard(newCard2);
+            this.deck.DestroyCard(number);
+            this.deck.AddCard(newCard);
+
         }
 
         public void FirstHand()

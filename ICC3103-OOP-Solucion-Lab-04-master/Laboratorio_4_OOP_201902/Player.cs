@@ -182,7 +182,20 @@ namespace Laboratorio_4_OOP_201902
                 6- Elimine la carta aleatoria escogida del mazo.
                 7- Agregue la carta original de la mano al mazo.
             */
-            throw new NotImplementedException();
+            if (this.hand.Cards[cardId] == typeof(CombatCard))
+            {
+                CombatCard card = this.hand.Cards[cardId];
+                CombatCard newCard = new CombatCard(card.Name, card.Type, card.Effect, card.AttackPoints, card.Hero);
+                this.hand.DestroyCard(cardId);
+                Random randomNumber = new Random();
+                int number = randomNumber.Next(0, this.deck.Cards.Length);
+                // Quede en el punto 5
+                
+            }
+            else
+            {
+
+            }
         }
 
         public void FirstHand()
@@ -190,7 +203,13 @@ namespace Laboratorio_4_OOP_201902
             /*Debe obtener 10 cartas aleatorias del mazo y asignarlas a la mano.
             Utilice el metodo DrawCard con 10 numeros de id aleatorios.
             */
-            throw new NotImplementedException();
+            Random random = new Random();
+            int aleatorio;
+            for (int i = 0; i < 10; i++)
+            {
+                aleatorio = random.Next(0, this.Deck.Cards.Length);
+                DrawCard(aleatorio);
+            }
         }
 
         public void ChooseCaptainCard(SpecialCard captainCard)

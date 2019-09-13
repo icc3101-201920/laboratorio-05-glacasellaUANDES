@@ -114,15 +114,22 @@ namespace Laboratorio_4_OOP_201902
                 2.3- Agregue la nueva carta a la mano
             Elimine la carta del mazo.
             Hint: Utilice los métodos ya creados en Hand y Deck (AddCard y DestroyCard), no se preocupe de la implementacion de estos aun.*/
-            if (cardId == 0)
-            {
 
+            if (GetType(this.deck.Cards[cardId]) == typeof(CombatCard))
+            {
+                CombatCard card = this.deck.Cards[cardId];
+                CombatCard newCard = new CombatCard(card.Name, card.Type, card.Effect, card.AttackPoints, card.Hero);
             }
             else
             {
-
+                SpecialCard card = this.deck.Cards[cardId];
+                SpecialCard newCard = new CombatCard(card.Name, card.Type, card.Effect);
             }
+            hand.AddCard(newCard);
+            deck.DestroyCard(cardId);
         }
+
+
         public void PlayCard(int cardId, EnumType buffRow = EnumType.None)
         {
             /*Realice el mismo procedimiento que en DrawCard, solo que ahora es desde Hand a Board.
@@ -137,8 +144,31 @@ namespace Laboratorio_4_OOP_201902
                         -El metodo AddCard solo requiere la carta.
                 3- Elimine la carta de la mano. 
              */
-            throw new NotImplementedException();
+            if (GetType(this.hand.Cards[cardId]) == typeof(CombatCard))
+            {
+                CombatCard card = this.hand.Cards[cardId];
+                CombatCard newCard = new CombatCard(card.Name, card.Type, card.Effect, card.AttackPoints, card.Hero);
+                board.AddCard(newCard);
+                hand.DestroyCard(cardId);
+            }
+            else
+            {
+                SpecialCard card = this.hand.Cards[cardId];
+                SpecialCard newCard = new SpecialCard(card.Name, card.Type, card.Effect);
+                if (card.Type == EnumType.buff)
+                {
+                    board.AddCard(newCard, this.id, buffRow);
+                }
+                else if (card.Type == EnumType.weather)
+                {
+                    board.AddCard(newCard);
+                }
+                hand.DestroyCard(cardId);
+            }
+
         }
+
+
         public void ChangeCard(int cardId)
         {
             /* Debe cambiar la carta en la posicion cardId de la mano por una carta aleatoria del mazo.
